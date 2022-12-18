@@ -2,16 +2,26 @@ import { useState } from 'react'
 
 const Header = props => <h1>{props.name}</h1>
 
-const Statistics = (props) => (
-  <>
-    <div>good {props.good}</div>
-    <div>neutral {props.neutral}</div>
-    <div>bad {props.bad}</div>
-    <div>all {props.good + props.neutral + props.bad}</div>
-    <div>average {props.sum / (props.good + props.neutral + props.bad)}</div>
-    <div>positive {(props.good / (props.good + props.neutral + props.bad)) * 100 + ' %'}</div>
-  </>
-)
+const Statistics = (props) => {
+  if(((props.good + props.neutral + props.bad)) === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }
+
+  return (
+    <>
+      <div>good {props.good}</div>
+      <div>neutral {props.neutral}</div>
+      <div>bad {props.bad}</div>
+      <div>all {props.good + props.neutral + props.bad}</div>
+      <div>average {props.sum / (props.good + props.neutral + props.bad)}</div>
+      <div>positive {(props.good / (props.good + props.neutral + props.bad)) * 100 + ' %'}</div>
+    </>
+    )
+}
 
 const Button = (props) => (
   <button onClick={props.handleClick}>
