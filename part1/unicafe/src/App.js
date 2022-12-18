@@ -2,7 +2,16 @@ import { useState } from 'react'
 
 const Header = props => <h1>{props.name}</h1>
 
-const Statistics = props => <div>{props.name} {props.value}</div>
+const Statistics = (props) => (
+  <>
+    <div>good {props.good}</div>
+    <div>neutral {props.neutral}</div>
+    <div>bad {props.bad}</div>
+    <div>all {props.good + props.neutral + props.bad}</div>
+    <div>average {props.sum / (props.good + props.neutral + props.bad)}</div>
+    <div>positive {(props.good / (props.good + props.neutral + props.bad)) * 100 + ' %'}</div>
+  </>
+)
 
 const Button = (props) => (
   <button onClick={props.handleClick}>
@@ -13,15 +22,14 @@ const Button = (props) => (
 const App = () => {
   // save clicks of each button to its own state
   const [stats, setStats] = useState({
-    good: 0, neutral: 0, bad: 0, sum: 0, all: 0
+    good: 0, neutral: 0, bad: 0, sum: 0
   })
 
   const handleGoodClick = () => {
     const newStats = { 
       ...stats,
       good: stats.good + 1,
-      sum: stats.sum + 1,
-      all: stats.all + 1
+      sum: stats.sum + 1
     }
     setStats(newStats)
   }
@@ -29,8 +37,7 @@ const App = () => {
   const handleNeutralClick = () => {
     const newStats = { 
       ...stats, 
-      neutral: stats.neutral + 1,
-      all: stats.all + 1
+      neutral: stats.neutral + 1
     }
     setStats(newStats)
   }
@@ -39,8 +46,7 @@ const App = () => {
     const newStats = { 
       ...stats,
       bad: stats.bad + 1,
-      sum: stats.sum - 1,
-      all: stats.all + 1
+      sum: stats.sum - 1
     }
     setStats(newStats)
   }
@@ -53,12 +59,7 @@ const App = () => {
       <Button handleClick={handleBadClick} text="bad" />
 
       <Header name='statistics' />
-      <Statistics name='good' value={stats.good} />
-      <Statistics name='neutral' value={stats.neutral} />
-      <Statistics name='bad' value={stats.bad} />
-      <Statistics name='all' value={stats.all} />
-      <Statistics name='average' value={stats.sum / stats.all} />
-      <Statistics name='positive' value={(stats.good / stats.all) * 100 + " %"} />
+      <Statistics good={stats.good} neutral={stats.neutral} bad={stats.bad} sum={stats.sum} />
     </div>
   )
 }
