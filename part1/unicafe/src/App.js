@@ -4,11 +4,11 @@ const Header = props => <h1>{props.name}</h1>
 
 const Statistics = props => <div>{props.name} {props.value}</div>
 
-const Button = (props) => {
+const Button = (props) => (
   <button onClick={props.handleClick}>
     {props.text}
   </button>
-}
+)
 
 const App = () => {
   // save clicks of each button to its own state
