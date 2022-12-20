@@ -7,6 +7,7 @@ const App = () => {
   const [countries, setCountries] = useState([])
   const [weather, setWeather] = useState([])
   const [search, setSearch] = useState('')
+  const [showProfile, setShowProfile] = useState(true)
 
   const countriesToShow = countries.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase()))
 
@@ -26,11 +27,15 @@ const App = () => {
   const handleSearch = (event) => {
     setSearch(event.target.value)
   }
+
+  const handleButton = (event) => {
+    setShowProfile(showProfile)
+  }
   
   return (
     <>
       <Search search={search} onChange={handleSearch} />
-      <Countries countries={countriesToShow} />
+      <Countries countries={countriesToShow} onButtonClick={handleButton} />
     </>
   )
 }

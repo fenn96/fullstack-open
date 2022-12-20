@@ -1,7 +1,7 @@
 import Weather from './Weather'
 
 const Button = (props) => (
-    <button onClick={props.handleClick}>
+    <button onClick={props.onButtonClick}>
       show
     </button>
   )
@@ -27,24 +27,24 @@ const CountryProfile = ({ countries, weather }) => {
     )
 }
 
-const Country = ({ countries }) => {
+const Country = ({ countries }, props) => {
     return (
         <div>
             {countries.map(country =>
-                <p key={country.name.common}>{country.name.common}</p>
+                <p key={country.name.common}>{country.name.common} <Button onButtonClick={props.onButtonClick} /></p>
             )}
         </div>
     )
 }
 
-const Countries = ({ countries, weather }) => {
+const Countries = ({ countries, weather }, props) => {
     switch(true) {
         case (countries.length >= 10):
             return (<p>Too many matches, specify another filter</p>)
         case (countries.length === 1):
             return (<CountryProfile countries={countries} weather={weather} />)
         default:
-            return (<Country countries={countries} />)
+            return (<Country countries={countries} onButtonClick={props.onButtonClick} />)
     }
 }
 
