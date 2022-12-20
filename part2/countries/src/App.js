@@ -5,11 +5,12 @@ import Countries from './components/Countries'
 
 const App = () => {
   const [countries, setCountries] = useState([])
+  const [weather, setWeather] = useState([])
   const [search, setSearch] = useState('')
 
   const countriesToShow = countries.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase()))
 
-  const hook = () => {
+  const countriesHook = () => {
     console.log('effect')
     axios
       .get('https://restcountries.com/v3.1/all')
@@ -18,9 +19,9 @@ const App = () => {
         setCountries(response.data)
     })
   }
-  console.log("penorsh",countriesToShow)
+  console.log(countriesToShow)
 
-  useEffect(hook, [])
+  useEffect(countriesHook, [])
 
   const handleSearch = (event) => {
     setSearch(event.target.value)
