@@ -47,8 +47,8 @@ const App = () => {
           }, 4000)
         })
         .catch(error => {
-          console.log(error)
-          setErrorMessage(`Error: Unable to add ${nameObject.name}`)
+          console.log(error.response.data.error)
+          setErrorMessage('Error: ' + error.response.data.error)
           setTimeout(() => {
             setErrorMessage(null)
           }, 4000)
@@ -70,7 +70,7 @@ const App = () => {
         })
         .catch(error => {
           console.log(error)
-          setErrorMessage(`Error: ${nameObject.name} has already been removed from server`)
+          setErrorMessage('Error: ' + error.response.data.error)
           setTimeout(() => {
             setErrorMessage(null)
           }, 4000)
@@ -84,7 +84,7 @@ const App = () => {
 
   const deletePerson = (event) => {
     event.preventDefault()
-    const id = parseInt(event.target.value)
+    const id = event.target.value
     const person = persons.find(person => person.id === id)
     console.log(person)
 
@@ -101,7 +101,7 @@ const App = () => {
       })
       .catch(error => {
         console.log(error)
-        setErrorMessage(`Error: Unable to delete ${person.name} has already been removed from server`)
+        setErrorMessage('Error: ' + error.response.data.error)
         setTimeout(() => {
           setErrorMessage(null)
         }, 4000)
@@ -140,8 +140,7 @@ const App = () => {
       <Header title="Numbers" />
       {personsToShow.map(person =>
         <div>
-          <Person person={person} />
-          <button onClick={deletePerson} value={person.id}>delete</button>
+          <Person person={person} onClick={deletePerson} />
         </div>
       )}
     </>
