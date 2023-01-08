@@ -5,11 +5,8 @@ import Countries from './components/Countries'
 
 const App = () => {
   const [countries, setCountries] = useState([])
-  const [weather, setWeather] = useState([])
+  const [allCountries, setAllCountries] = useState([])
   const [search, setSearch] = useState('')
-  const [showProfile, setShowProfile] = useState(true)
-
-  const countriesToShow = countries.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase()))
 
   const countriesHook = () => {
     console.log('effect')
@@ -17,25 +14,30 @@ const App = () => {
       .get('https://restcountries.com/v3.1/all')
       .then(response => {
         console.log(response.data)
-        setCountries(response.data)
+        setAllCountries(response.data)
     })
   }
-  console.log(countriesToShow)
 
   useEffect(countriesHook, [])
 
   const handleSearch = (event) => {
     setSearch(event.target.value)
+    if (search) {
+      const countriesToShow = () => allCountries.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase()))
+      setCountries(countriesToShow)
+    }
   }
 
   const handleButton = (event) => {
-    setShowProfile(showProfile)
+    const countryToShow = allCountries.filter(country => country.name.common.toLowerCase().includes(event.target.name.toLowerCase()))
+    setCountries(countryToShow)
   }
+  
   
   return (
     <>
       <Search search={search} onChange={handleSearch} />
-      <Countries countries={countriesToShow} onButtonClick={handleButton} />
+      <Countries countries={countries} setCountries={setCountries} onClick={handleButton} />
     </>
   )
 }

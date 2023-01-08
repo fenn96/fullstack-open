@@ -1,50 +1,23 @@
-import Weather from './Weather'
+import Country from './Country'
 
-const Button = (props) => (
-    <button onClick={props.onButtonClick}>
-      show
-    </button>
-  )
-
-const CountryProfile = ({ countries, weather }) => {
-    return (
-        <>
-            {countries.map(country =>
-                <div>
-                    <h1>{country.name.common}</h1>
-                    <p>capital {country.capital}</p>
-                    <p>area {country.area}</p>
-                    <p><strong>languages:</strong></p>
-                    <ul>
-                        {Object.values(country.languages).map(language =>
-                            <li>{language}</li>
-                        )}
-                    </ul>
-                    <img src={country.flags.png} alt={country.name.common}></img>
-                </div>
-            )}
-        </>
-    )
-}
-
-const Country = ({ countries }, props) => {
+const CountryList = ({ countries, onClick}) => {
     return (
         <div>
-            {countries.map(country =>
-                <p key={country.name.common}>{country.name.common} <Button onButtonClick={props.onButtonClick} /></p>
+            {countries.map((country, i) =>
+                <p key={i}> {country.name.common} <input type="button" value="show" name={country.name.common} onClick={onClick}></input></p>
             )}
         </div>
     )
 }
 
-const Countries = ({ countries, weather }, props) => {
+const Countries = ({ countries, onClick }) => {
     switch(true) {
-        case (countries.length >= 10):
+        case (countries.length > 10):
             return (<p>Too many matches, specify another filter</p>)
-        case (countries.length === 1):
-            return (<CountryProfile countries={countries} weather={weather} />)
+        case ((countries.length >= 2 && countries.length <= 10) || countries.length === 0):
+            return (<CountryList countries={countries} onClick={onClick} />)
         default:
-            return (<Country countries={countries} onButtonClick={props.onButtonClick} />)
+            return (<Country country={countries[0]} />)
     }
 }
 

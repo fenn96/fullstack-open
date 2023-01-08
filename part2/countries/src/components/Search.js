@@ -1,7 +1,7 @@
-const Search = (props) => {
+const Search = ({ search, onChange }) => {
     return (
         <form>
-            <div>find countries: <input value={props.search} onChange={props.onChange} /></div>
+            <div>find countries: <input value={search} onChange={onChange} /></div>
         </form>
     )
 }
